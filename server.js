@@ -1,13 +1,19 @@
 import express from "express";
 import bodyParser from "body-parser";
+import { db as database } from "./models";
 import cors from "cors";
+import dotenv from "dotenv";
+import api from "./routes";
 
+dotenv.config();
 
 const start = async () => {
     try {
-        const host = "0.0.0.0";
-        const port = process.env.PORT || 8888
+        const host = process.env.HOST || "0.0.0.0";
+        const port = process.env.PORT || 8888;
         const app = express();
+
+        await database.authenticate();
 
         app.use(cors());
 
@@ -20,11 +26,13 @@ const start = async () => {
             });
         });
 
-        app.listen(port, () => {
+        app.use("/api", api);
+
+        app.listen(port, host, () => {
             console.log(`Server is running in ${host} at ${port}`);
         });
     } catch (err) {
-        console.log(ex.message);
+        console.log(err.message);
     }
 }
 
