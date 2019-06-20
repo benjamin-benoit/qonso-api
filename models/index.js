@@ -1,8 +1,10 @@
 import Sequelize from "sequelize";
 import dotenv from "dotenv";
 
+import User from "./user";
+
 dotenv.config();
 
-console.log(process.env.DATABASE);
+export const db = new Sequelize(process.env.DATABASE_URL + "?" + process.env.DATABASE_ARG);
 
-export const db = new Sequelize(process.env.DATABASE);
+User.init(db);
