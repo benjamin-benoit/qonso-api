@@ -1,4 +1,5 @@
 import { Router } from "express";
+import User from "./user";
 
 const api = Router();
 
@@ -11,5 +12,7 @@ api.get("/", (req, res) => {
         }
     });
 });
+
+//api.use("/user", User);
 
 export default api;
