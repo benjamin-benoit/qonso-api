@@ -17,10 +17,10 @@ api.post("/register", async (req, res) => {
 				password
 			});
 
-            await user.save();
-            
-            const payload = {id: user.id, nickname, email};
-            const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '24h' });
+			await user.save();
+
+			const payload = { id: user.id, nickname, email };
+			const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '24h' });
 
 			res.status(201).json({ data: { user }, meta: { token } });
 		} else {
@@ -37,7 +37,10 @@ api.post("/login", (req, res) => {
 	try {
 		User.findOne({ where: { nickname: nickname, password: password } }).then(user => {
 			if (user) {
-				res.status(201).json({ data: { user } });
+				const payload = { id: user.id, nickname, email };
+				const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '24h' });
+
+				res.status(201).json({ data: { user }, meta: { token } });
 			}
 			else {
 				res.status(400).json({ err: "login or password incorrect" });
@@ -97,16 +100,16 @@ api.delete("/delete", async (req, res) => {
 });
 
 api.post("/checkJwt", (req, res) => {
-    const token = req.headers.authorization;
+	const token = req.headers.authorization;
 
-    jwt.verify(token.replace("Bearer ", ""), process.env.SECRET_KEY, (err, decoded) => {
-        if (err) {
-            res.status(400).json({ err: err.message });
-        }
-        else {
-            res.status(201).json({ data: { message: "valide token" } });
-        }
-    });
+	jwt.verify(token.replace("Bearer ", ""), process.env.SECRET_KEY, (err, decoded) => {
+		if (err) {
+			res.status(400).json({ err: err.message });
+		}
+		else {
+			res.status(201).json({ data: { message: "valide token" } });
+		}
+	});
 });
 
 export default api;
