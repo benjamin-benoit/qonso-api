@@ -13,6 +13,6 @@ api.get("/", (req, res) => {
     });
 });
 
-//api.use("/user", User);
+api.use("/user", User);
 
 export default api;
