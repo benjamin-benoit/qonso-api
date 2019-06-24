@@ -13,7 +13,9 @@ const start = async () => {
         const port = process.env.PORT || 8888;
         const app = express();
 
-        await database.authenticate();
+		await database.authenticate();
+		
+		await database.sync({ force: false })
 
         app.use(cors());
 
