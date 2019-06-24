@@ -37,7 +37,7 @@ api.post("/login", (req, res) => {
 	try {
 		User.findOne({ where: { nickname: nickname, password: password } }).then(user => {
 			if (user) {
-				const payload = { id: user.id, nickname, email };
+				const payload = { id: user.id, nickname, email: user.email };
 				const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '24h' });
 
 				res.status(201).json({ data: { user }, meta: { token } });
@@ -68,7 +68,10 @@ api.put("/changePassword", async (req, res) => {
 						password: newPassword
 					});
 
-					res.status(201).json({ data: { user } });
+					const payload = { id: user.id, nickname: user.nickname, email: user.email };
+					const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '24h' });
+
+					res.status(201).json({ data: { user }, meta: { token } });
 				} catch (err) {
 					res.status(400).json({ err: err.message });
 				}
