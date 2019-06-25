@@ -2,6 +2,7 @@ import { Router } from "express";
 import Consume from "../models/consume";
 import Product from "../models/product";
 import User from "../models/user";
+import Type from "../models/type";
 
 const api = Router();
 
@@ -54,6 +55,52 @@ api.delete("/delete", async (req, res) => {
 			res.status(400).json({ err: "consume not found" });
 		}
 	});
+});
+
+api.get("/getAll", async (req, res) => {
+	await Consume.findAll({
+		include: [{
+			model: User
+		},
+		{
+			model: Product,
+			include: [{
+				model: Type
+			}]
+		}]
+	}).then(consumes => {
+		res.status(201).json({ consumes });
+	});
+});
+
+api.get("/getByUserId/:userId", async (req, res) => {
+	const { userId } = req.params;
+
+	const user = await User.findByPk(userId);
+
+	if (!user) {
+		res.status(400).json({ err: "user not found" });
+	}
+	else {
+		await Consume.findAll({
+			include: [{
+				model: User
+			},
+			{
+				model: Product,
+				include: [{
+					model: Type
+				}]
+			}],
+			where: {
+				UserId: userId
+			}
+		}).then(consumes => {
+			res.status(201).json({ consumes });
+		}).catch(err => {
+			res.status(400).json({ err: err.message });
+		});
+	}
 });
 
 export default api;
