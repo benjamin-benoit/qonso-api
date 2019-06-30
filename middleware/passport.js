@@ -9,7 +9,7 @@ export default function (req, res, next) {
 		if (token) {
 			jwt.verify(token.replace("Bearer ", ""), process.env.SECRET_KEY, (err, decoded) => {
 				if (err) {
-					res.status(400).json({ err: "bad / invalide token" });			
+					res.status(400).json({ err: "bad / invalide token" });
 				}
 				else {
 					next();

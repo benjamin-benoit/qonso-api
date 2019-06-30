@@ -50,8 +50,4 @@ api.post("/login", (req, res) => {
 	}
 });
 
-api.get("/hello", (req, res) => {
-    res.send("hello");
-});
-
 export default api;
