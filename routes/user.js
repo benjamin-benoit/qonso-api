@@ -56,17 +56,4 @@ api.delete("/delete", async (req, res) => {
 	});
 });
 
-api.post("/checkJwt", (req, res) => {
-	const token = req.headers.authorization;
-
-	jwt.verify(token.replace("Bearer ", ""), process.env.SECRET_KEY, (err, decoded) => {
-		if (err) {
-			res.status(400).json({ err: err.message });
-		}
-		else {
-			res.status(201).json({ data: { message: "valide token" } });
-		}
-	});
-});
-
 export default api;

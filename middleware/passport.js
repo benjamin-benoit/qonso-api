@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 
 export default function (req, res, next) {
-	const regexp = /\/(\w*)$/;
-	const match = regexp.exec(req.originalUrl);
+	// const regexp = /\/(\w*)$/;
+	// const match = regexp.exec(req.originalUrl);
 
-	if (match[1] != "show") {
+	if (req.method != "GET") {
 		const token = req.headers.authorization
 		if (token) {
 			jwt.verify(token.replace("Bearer ", ""), process.env.SECRET_KEY, (err, decoded) => {
