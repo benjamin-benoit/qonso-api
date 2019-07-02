@@ -20,11 +20,11 @@ api.post("/create", async (req, res) => {
 	if (user && product) {
 		try {
 			const consume = new Consume({
-                key,
-                title,
-                description,
-                longitude,
-                latitude,
+				key,
+				title,
+				description,
+				longitude,
+				latitude,
 				UserId: user.id,
 				ProductId: product.id
 			});
@@ -37,6 +37,45 @@ api.post("/create", async (req, res) => {
 		}
 	} else {
 		res.status(400).json({ err: "user or product not found" });
+	}
+});
+
+api.post("/createRecursive", async (req, res) => {
+	const { key, title, description, longitude, latitude, productName, productBarCode, typeName, userId } = req.body;
+
+	try {
+		// console.log("find or create type");
+		const type = await Type.findOrCreate({ where: { name: typeName } });
+		// console.log(type[0].dataValues.id);
+		// console.log("type created");
+		const product = await Product.findOrCreate({ where: { name: productName, barcode: productBarCode, TypeId: type[0].dataValues.id } });
+		// console.log("product created");
+
+		const user = await User.findByPk(userId);
+
+		if (user && product) {
+			try {
+				const consume = new Consume({
+					key,
+					title,
+					description,
+					longitude,
+					latitude,
+					UserId: user.id,
+					ProductId: product[0].dataValues.id
+				});
+
+				await consume.save();
+
+				res.status(201).json({ data: { consume } });
+			} catch (err) {
+				res.status(400).json({ err: err.message });
+			}
+		} else {
+			res.status(400).json({ err: "user or product not found" });
+		}
+	} catch (err) {
+		res.status(400).json({ err: err.message });
 	}
 });
 
