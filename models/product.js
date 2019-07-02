@@ -17,7 +17,7 @@ export default class Product extends Model {
 					}
                 },
                 barcode: {
-					type: Sequelize.INTEGER,
+					type: Sequelize.DOUBLE,
 					allowNull: false,
 					validate: {
 						notEmpty: true

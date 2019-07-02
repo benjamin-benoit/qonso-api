@@ -12,7 +12,7 @@ api.get("/show", async (req, res) => {
 });
 
 api.post("/create", async (req, res) => {
-	const { key, title, description, longitude, latitude, productId, userId } = req.body;
+	const { longitude, latitude, productId, userId } = req.body;
 
 	const product = await Product.findByPk(productId);
 	const user = await User.findByPk(userId);
@@ -20,9 +20,6 @@ api.post("/create", async (req, res) => {
 	if (user && product) {
 		try {
 			const consume = new Consume({
-				key,
-				title,
-				description,
 				longitude,
 				latitude,
 				UserId: user.id,
@@ -41,7 +38,7 @@ api.post("/create", async (req, res) => {
 });
 
 api.post("/createRecursive", async (req, res) => {
-	const { key, title, description, longitude, latitude, productName, productBarCode, typeName, userId } = req.body;
+	const { longitude, latitude, productName, productBarCode, typeName, userId } = req.body;
 
 	try {
 		// console.log("find or create type");
@@ -56,9 +53,6 @@ api.post("/createRecursive", async (req, res) => {
 		if (user && product) {
 			try {
 				const consume = new Consume({
-					key,
-					title,
-					description,
 					longitude,
 					latitude,
 					UserId: user.id,

@@ -9,27 +9,6 @@ export default class Consume extends Model {
                     primaryKey: true,
 					autoIncrement: true
                 },
-                key: {
-					type: Sequelize.STRING,
-					allowNull: false,
-					validate: {
-						notEmpty: true
-					}
-                },
-                title: {
-					type: Sequelize.STRING,
-					allowNull: false,
-					validate: {
-						notEmpty: true
-					}
-                },
-                description: {
-					type: Sequelize.STRING,
-					allowNull: false,
-					validate: {
-						notEmpty: true
-					}
-                },
                 longitude: {
 					type: Sequelize.DOUBLE,
 					allowNull: false,

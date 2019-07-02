@@ -364,9 +364,6 @@ Success (201):
 "products": [
         {
             "id": 1,
-            "key": "feyfg",
-            "title": "test",
-            "description": "testtesttest",
             "longitude": 2.363148,
             "latitude": 48.788703,
             "createdAt": "2019-06-25T07:58:36.186Z",
@@ -391,9 +388,6 @@ Ajoute un Consume à la BDD
 Send:
 ```json
 {
-    "key": "feyfg",
-    "title": "test",
-    "description": "testtesttest",
     "longitude": 2.363148,
     "latitude": 48.788703,
     "UserId": 5,
@@ -406,15 +400,50 @@ Success (201):
     "data": {
         "consume": {
             "id": 1,
-            "key": "feyfg",
-            "title": "test",
-            "description": "testtesttest",
             "longitude": 2.363148,
             "latitude": 48.788703,
             "createdAt": "2019-06-25T07:58:36.186Z",
             "updatedAt": "2019-06-25T07:58:36.186Z",
             "UserId": 5,
             "ProductId": 1
+        }
+    }
+}
+```
+Error (400):
+```json
+{
+    "err": "message d'éreur"
+}
+```
+
+## **[/createRecursive](https://qonso-app.herokuapp.com/api/consume/createRecursive)** (POST) :
+
+Ajoute un Consume à la BDD
+
+Send:
+```json
+{
+    "longitude": 2.363148,
+    "latitude": 48.788703,
+    "productName": "testProduct",
+    "productBarCode": 12345,
+    "typeName": "testName",
+    "UserId": 1
+}
+```
+Success (201):
+```json
+{
+    "data": {
+        "consume": {
+            "id": 1,
+            "longitude": 2.363148,
+            "latitude": 48.788703,
+            "UserId": 1,
+            "ProductId": 1,
+            "updatedAt": "2019-07-02T09:31:55.640Z",
+            "createdAt": "2019-07-02T09:31:55.640Z"
         }
     }
 }
@@ -463,9 +492,6 @@ Success (201):
     "consumes": [
         {
             "id": 1,
-            "key": "feyfg",
-            "title": "test",
-            "description": "testtesttest",
             "longitude": 2.363148,
             "latitude": 48.788703,
             "createdAt": "2019-06-25T07:58:36.186Z",
