@@ -429,7 +429,7 @@ Send:
     "productName": "testProduct",
     "productBarCode": 12345,
     "typeName": "testName",
-    "UserId": 1
+    "userId": 1
 }
 ```
 Success (201):
